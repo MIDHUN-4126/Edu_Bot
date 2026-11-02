@@ -23,7 +23,7 @@ Create and activate a virtual environment, then install the dependencies:
 ```powershell
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
-python -m pip install -r Requirements.txt
+python -m pip install -r requirements.txt
 ```
 
 ## Run
@@ -59,4 +59,4 @@ time. The model is cached locally for subsequent launches.
 
 - `app.py` - chatbot application and Gradio interface
 - `streamlit_app.py` - Streamlit deployment entry point
-- `Requirements.txt` - Python dependencies
+- `requirements.txt` - Python dependencies
