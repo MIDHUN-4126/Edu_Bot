@@ -2,7 +2,7 @@ import streamlit as st
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
-MODEL_NAME = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
+MODEL_NAME = "HuggingFaceTB/SmolLM2-360M-Instruct"
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
 
@@ -11,19 +11,22 @@ def load_model():
     tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
     model = AutoModelForCausalLM.from_pretrained(
         MODEL_NAME,
-        torch_dtype=torch.float16 if DEVICE == "cuda" else torch.float32,
+        dtype=torch.float16 if DEVICE == "cuda" else torch.float32,
     ).to(DEVICE)
     return tokenizer, model
 
 
 def generate_response(message, history, tokenizer, model):
-    context = ""
-    for turn in history[-4:]:
-        context += f"<|{turn['role']}|>{turn['content']}"
-
-    prompt = (
-        "<|system|>You are a helpful educational science chatbot."
-        f"<|user|>{context}{message}<|assistant|>"
+    messages = [
+        {
+            "role": "system",
+            "content": "You are a helpful educational science chatbot.",
+        },
+        *history[-4:],
+        {"role": "user", "content": message},
+    ]
+    prompt = tokenizer.apply_chat_template(
+        messages, tokenize=False, add_generation_prompt=True
     )
     inputs = tokenizer(prompt, return_tensors="pt").to(DEVICE)
 
@@ -45,7 +48,9 @@ def generate_response(message, history, tokenizer, model):
 
 st.set_page_config(page_title="Educational Chatbot", page_icon="🎓")
 st.title("Educational Chatbot")
-st.caption("Ask science, physics, or AI questions. Powered by TinyLlama-1.1B-Chat.")
+st.caption(
+    "Ask science, physics, or AI questions. Powered by SmolLM2-360M-Instruct."
+)
 
 if "messages" not in st.session_state:
     st.session_state.messages = []

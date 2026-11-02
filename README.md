@@ -1,7 +1,7 @@
 # Educational Chatbot
 
-A Gradio- and Streamlit-based educational science chatbot powered by the
-`TinyLlama/TinyLlama-1.1B-Chat-v1.0` language model.
+A Gradio- and Streamlit-based educational science chatbot powered by a
+Hugging Face instruction-tuned language model.
 
 ## Features
 
@@ -49,8 +49,11 @@ streamlit run streamlit_app.py
 4. Set the branch to `main` and the main file to `streamlit_app.py`.
 5. Click **Deploy**.
 
-The first deployment downloads the TinyLlama model and may take several
-minutes. The app requires enough memory for the full 1.1B-parameter model.
+The first deployment downloads the model and may take several minutes. The
+Streamlit deployment uses the smaller
+`HuggingFaceTB/SmolLM2-360M-Instruct` model to fit Streamlit Community
+Cloud's free memory limits. The original Gradio app continues to use
+TinyLlama.
 
 The first launch downloads the model from Hugging Face and may take some
 time. The model is cached locally for subsequent launches.
