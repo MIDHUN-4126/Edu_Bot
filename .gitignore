@@ -1,0 +1,6 @@
+.venv/
+educhat.venv/
+__pycache__/
+*.py[cod]
+.env
+.cache/
